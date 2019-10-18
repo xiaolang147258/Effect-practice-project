@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jQuery.jqthumb插件让你的图片始终保持等比例排列</title>
+<style type="text/css">
+*{margin:0;padding:0;list-style-type:none;}
+
+.pic{width:920px;margin:0 auto;zoom:1;}
+.pic:after{content:'';display:table;clear:both;}
+.pic li{float:left;width:200px;height:200px;margin:20px 10px 0;}
+.pic li img{}
+.apply{border:5px solid #5cb85c;}
+</style>
+</head>
+<body>
+
+<!-- 代码部分begin -->
+<ul class="pic">	
+	<li  class="apply"><img src="http://img3.imgtn.bdimg.com/it/u=2363037083,4182949652&fm=26&gp=0.jpg" ></li>
+	<li class="apply"><img src="http://img3.imgtn.bdimg.com/it/u=3166167724,322082273&fm=26&gp=0.jpg" ></li>
+	<li class="apply"><a href="#"><img src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1570892905,4000152620&fm=26&gp=0.jpg" ></a></li>
+	<li class="apply"><a href="#"><img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2682336118,1355198694&fm=26&gp=0.jpg" ></a></li>
+</ul>
+<script src="http://www.lanrenzhijia.com/ajaxjs/jquery.min.js"></script>
+<script src="js/jqthumb.min.js"></script>
+<script>
+$(function(){
+	$('.apply img').jqthumb({
+		width: 200,
+		height: 200,
+		after: function(imgObj){
+			imgObj.css('opacity', 0).animate({opacity: 1},1000);
+		}
+	});
+});
+</script>
+<!-- 代码部分end -->
+
+</body>
+</html>

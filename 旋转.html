@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			 #da{ 
+         position:absolute;
+         left: 800px;
+         background: red;
+                 
+-webkit-transition-property: -webkit-transform;  
+
+-webkit-transition-duration: 5s;  
+
+-moz-transition-property: -moz-transform;  
+
+-moz-transition-duration: 5s;  
+
+-webkit-animation: rotate 0.5s linear infinite;  
+
+-moz-animation: rotate 0.5s linear infinite;  
+
+-o-animation: rotate 0.5s linear infinite;  
+
+animation: rotate :0.5s linear infinite;}
+
+@-webkit-keyframes rotate{from{-webkit-transform: rotate(0deg)} to{-webkit-transform: rotate(360deg)}}
+
+@-moz-keyframes rotate{from{-moz-transform: rotate(0deg)} to{-moz-transform: rotate(359deg)}}
+
+@-o-keyframes rotate{from{-o-transform: rotate(0deg)} to{-o-transform: rotate(359deg)}}
+
+@keyframes rotate{from{transform: rotate(0deg)} to{transform: rotate(359deg)}}
+       
+		</style>
+	</head>
+	<body>
+		<div id="da" style="width: 200px;height: 200px;background: red;"></div>
+	</body>
+</html>

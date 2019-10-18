@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		body p{
+			position: absolute;
+		}
+	</style>
+	<body style="width: 100%;height: 800px;position: fixed;overflow: hidden;">
+		
+		<button id="kai"  onclick="to_piao(1)">自动</button>
+		<button id="tin" onclick="to_piaos(2)" style="display:none;" onclick="to_piao">停止</button>
+		
+	</body>
+	
+	<script src="static/jq.js"></script>
+	<script type="text/javascript">
+		 let val = ['昌盛','富强','民主','文明',"和谐",'团结','友爱'];
+		 let colors = ['red','blue','#6EC7FF','green','block','#FC8B8B','#D4B9FD','#E85E5E'];
+		 
+		 function play_go(x,y){
+			 var result = [];
+			 for(var i=0;i<6;i++){
+			 var ranNum = Math.ceil(Math.random() * 25); //生成一个0到25的数字
+			  result.push(String.fromCharCode(65+ranNum));
+			 }
+			   var ider = result.join('');
+			 			 // console.log(x,y);
+			 			 var indexs = Math.ceil(Math.random()*6);
+			 			 var color_index = Math.ceil(Math.random()*7);
+			 			 $('body').append(`<p id=`+ider+` >`+val[indexs]+`</p>`);
+			 			 $('#'+ider).css('top',y+'px');
+			 			 $('#'+ider).css('left',x+'px');
+			 			 $('#'+ider).css('color',colors[color_index]);
+						 $('#'+ider).css('opacity','0');	  
+			 			 $('#'+ider).animate({top:'+=950px',opacity:'1'},6500);
+			 			 $('#'+ider).animate({top:'0',opacity:'0'},0);
+			 			 window.setTimeout(()=>{$('#'+ider).hide()},6500)
+		 };
+		 function play_go_click(x,y){
+		 			 var result = [];
+		 			 for(var i=0;i<6;i++){
+		 			 var ranNum = Math.ceil(Math.random() * 25); //生成一个0到25的数字
+		 			  result.push(String.fromCharCode(65+ranNum));
+		 			 }
+		 			   var ider = result.join('');
+		 			 			 // console.log(x,y);
+		 			 			 var indexs = Math.ceil(Math.random()*6);
+		 			 			 var color_index = Math.ceil(Math.random()*7);
+		 			 			 $('body').append(`<p id=`+ider+` >`+val[indexs]+`</p>`);
+		 			 			 $('#'+ider).css('top',y+'px');
+		 			 			 $('#'+ider).css('left',x+'px');
+		 			 			 $('#'+ider).css('color',colors[color_index]);
+		 			 			 $('#'+ider).animate({top:'-=350px',opacity:'0'},2500);
+		 			 			 $('#'+ider).animate({top:'0',opacity:'0'},0);
+		 			 			 window.setTimeout(()=>{$('#'+ider).hide()},2500)
+		 }
+		 
+		 $('body').click(function(event){
+			 var e = event || window.event;
+			 var scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
+             var scrollY = document.documentElement.scrollTop || document.body.scrollTop;
+             var x = e.pageX || e.clientX + scrollX;
+             var y = e.pageY || e.clientY + scrollY;
+		     play_go_click(x,y)
+		 })
+		 var settime = false;
+		 
+		 var to_piao = function(i){
+			  settime = true;
+			  $('#kai').hide();$('#tin').show();
+			  var setdata = window.setInterval(()=>{
+			  			 var x = Math.ceil(Math.random()*1400)+30;
+			  			 var y = -100; 
+			  			 play_go(x,y);
+						 if(settime==false){
+							clearInterval(setdata); 
+						 }
+			  },150)
+		 }
+		 
+		 var to_piaos = function(i){
+			 $('#kai').show();$('#tin').hide();
+		     settime = false;
+		 }
+		 
+	</script>
+</html>

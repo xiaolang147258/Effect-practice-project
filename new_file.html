@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style type="text/css">
+<!--
+body {
+	text-align:left; padding:0;
+	margin:0 auto 0 auto;
+}
+div,img,dl,dt,dd,ul,li,form {
+	position:relative;
+	padding:0; margin:0 auto 0 auto;
+	border:0; z-index:1;
+}
+#pageWidth {
+	width:90%; text-align:center;
+}
+a{color:#000; text-decoration:none;}
+a:hover{color:#000; text-decoration:none;}
+.dvContent_l_03, .dvContent_l_04{width:100%;}
+#dvH{height:45px;}
+#dvLogin{position:fixed; top:0; left:0; width:100%; text-align:center; background:rgba(255,255,255,1); z-index:999; background:#191919; overflow:hidden; height:45px; line-height:45px; font-size:18px;}
+#dvLogin a{color:#999; display:block; float:left; width:25%; height:45px;}
+#dvLogin .curPage{color:#FFF;}
+#dvLogin_2{position:fixed; top:0; left:0; width:100%; height:45px; line-height:45px; text-align:center;font-size:18px; background:rgba(255,255,255,1); z-index:999; background:#191919; overflow:hidden; color:#FFF;}
+#dvLogin_2 a{color:#FFF; text-decoration:none; }
+#dvLogin_2 .aFanhui{position:absolute; left:5%; font-size:16px; line-height:48px;}
+#dvTop{width:100%; line-height:35px; text-align:left; font-size:16px; border-bottom:1px solid #CCC;}
+#dvPath{width:100%; line-height:35px; text-align:left; font-size:16px; border-bottom:1px solid #CCC;}
+.dvContent_l_03{text-align:left; line-height:26px; font-size:16px; margin:10px auto;}
+.dvContent_l_03 img{float:left; width:26px; margin-right:6px;}
+.dvContent_l_04{clear:both; line-height:20px; text-align:right; color:#666; font-size:14px; border-bottom:1px dashed #666;}
+#dvPrevNext{width:100%; line-height:60px; text-align:center; font-size:14px;}
+#dvBottom{clear:both; width:100%; height:86px; text-align:center; position:relative; color:#8c8c8c;}
+#dvBottom span{display:block; width:90px; background:#FFF; top:28px; position:absolute; left:50%; margin-left:-45px; z-index:5; font-size:14px;}
+#dvBottom hr{width:60%; position:absolute; left:20%; top:30px; z-index:1; color:#8c8c8c;}
+-->
+</style>
+<title>暗网中文论坛，夫妻交友，全球华人夫妻交流平台</title>
+<script type="text/javascript">
+function gId(sId) {
+	return document.getElementById(sId);	
+}
+function getObjById(sId) {
+	return 	document.getElementById(sId);
+}
+function deepweb_readCookie(name){
+	var sSearch = name + "=";
+	var value = "";
+	var offset = document.cookie.indexOf(sSearch);
+	if( offset != -1 ) {
+		offset += sSearch.length;
+		end = document.cookie.indexOf(";", offset);
+		if ( end == -1 ) {
+			end = document.cookie.length;
+		}
+		value = unescape(document.cookie.substring(offset, end));
+	}
+	return value;
+}
+function deepweb_setCookie(name, value, expireSeconds, path, domain, secure) {
+	expireSeconds = ((expireSeconds == null) ? 60000000000 : expireSeconds);
+	var objDate = new Date();
+	objDate.setTime(objDate.getTime() + expireSeconds);
+	var expString = ";expires=" + objDate.toGMTString();
+	var pathString = ((path == null) ? ";path=/" : (";path=" + path));
+	var domainString = ((domain == null) ? "" : (";domain=" + domain));
+	var secureString = ((secure == null) ? "" : ";secure=1");
+	var cookieString = name +"=" + escape(value) + expString + pathString + domainString + secureString;
+	document.cookie = cookieString;
+	return true;	 
+}
+window.onload=function(){
+	var deepWebProtocol = window.location.protocol;
+	var deepWebDomain = window.location.hostname;
+	deepweb_setCookie("deepWebProtocol", deepWebProtocol);
+	deepweb_setCookie("deepWebDomain", deepWebDomain);
+}
+function ajax_delImg(myId) {
+	var urlTmp = window.location.protocol + "//" + window.location.hostname + "/ajax_delImg.php?id=" + myId;
+	var ajaxRespon = getResultByUrl(urlTmp);
+	
+		window.location.replace(window.location.href);
+	
+	
+}
+window.onscroll=function(){
+	var stopFlag=document.getElementById("stopFlag").innerHTML; 
+	var wScrollY = window.scrollY;
+	if (wScrollY==0){
+		//window.location.replace(window.location.href);
+	}
+	var wInnerH = window.innerHeight;
+	var bScrollH = document.body.scrollHeight;
+	if (wScrollY + wInnerH >= bScrollH && stopFlag!=1){
+		insertHtml();
+	}
+}
+function insertHtml(){
+	var oMinDaTime=document.getElementById("minDaTime");
+	var minDaTime=oMinDaTime.innerHTML;
+	var url=window.location.protocol + "//" + window.location.hostname + "/ajax_xml.php?loginUid="+deepweb_readCookie("cookieUid")+"&minDaTime=" + minDaTime + "&tmp=" + Math.round(Math.random()*10000);
+	var parser=new DOMParser();
+	var strByUrl = getResultByUrl(url);
+	if(strByUrl == "no" || strByUrl == false) {
+		document.getElementById("stopFlag").innerHTML=1;
+		document.getElementById("dvBottom").innerHTML="<hr><span>已无更多</span>";
+		document.getElementById("dvBottom").style.display="";
+		return true;
+	}
+	else {
+		var xmldom=parser.parseFromString(strByUrl, "text/xml");
+		var opageWidth=document.getElementById("pageWidth");
+		var myUrl=null,myTitle=null,myDaTime=null,myHot=null,strTmp=null,oDiv=null;
+		var link="href";
+		for(var i=0; i<6; i++){
+			myUrl=xmldom.getElementsByTagName("url")[i].childNodes[0].nodeValue;
+			myTitle=xmldom.getElementsByTagName("title")[i].childNodes[0].nodeValue;
+			myHot=xmldom.getElementsByTagName("hot")[i].childNodes[0].nodeValue;
+			myDaTime=xmldom.getElementsByTagName("date")[i].childNodes[0].nodeValue;
+			oMinDaTime.innerHTML=myDaTime;
+			if(myUrl=="no"&&myTitle=="no"&&myDaTime=="no"&&myHot=="no"){
+				document.getElementById("stopFlag").innerHTML=1;
+				document.getElementById("dvBottom").innerHTML="<hr><span>已无更多</span>";
+				document.getElementById("dvBottom").style.display="";
+				return true;
+			}
+			strTmp='<div class="dvContent_l_03"><a '+link+'="'+myUrl+'" target="_blank">'+myTitle+'</a></div><div class="dvContent_l_04">'+myHot+'%</div>';
+			oDiv=document.createElement("div");
+			oDiv.innerHTML=strTmp;
+			opageWidth.appendChild(oDiv);
+			oDiv.className="list";
+		}
+	}
+}
+function getResultByUrl(url){	
+	//创建xmlhttprequest对象
+	var xmlhttp;
+	if (window.ActiveXObject) {
+		xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");	
+		if (!xmlhttp) xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	else
+	xmlhttp = new XMLHttpRequest();
+	//发送请求
+	xmlhttp.open("GET", url, false);
+	try {
+		xmlhttp.send(null);
+	}
+	catch(e) {
+		return false;
+	}
+	if(xmlhttp.readyState == 4) {
+		if(xmlhttp.status == 200) return xmlhttp.responseText;
+		else	return false;
+	}
+	else
+		return false;
+	var xmlhttp = null;
+}
+</script>
+</head>
+<body>
+<div id="pageWidth">
+	<div id="dvH">暗网中文论坛</div>
+	<div id="dvLogin">
+		<a href="#" class="curPage" onclick="return false;">首页</a>
+		<a href="/chatList.php">我的私信</a>
+		<a href="/myHome.php">个人中心</a>
+		<a href="/search.php">搜索</a>
+	</div>
+	<div id="dvTop"><a href="http://5lek6m6d6g6o6uet.com/">&gt;&gt;暗网中文论坛-夫妻交友</a>
+		<!--
+		<div style="text-align:right;">
+			<a href="/note.html" style=" color:blue; text-decoration:underline;">站长公告&gt;&gt;</a>
+		</div>
+		-->
+	</div>
+	<div class="dvContent_l_03"><a href="/p/1218127287.html">【视频】和酒店前台借了半张纸，这下算是齐活了吧！哈哈 </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218126992.html">【夫妻】广东80后真实夫妻，夫83年，32/170/53;妻89年，26/164/48，长相优秀，找同条件的玩，从视频慢慢开始再同房不&amp;，慢慢来，不急。qq1228800754 </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218127918.html">【夫妻】石家庄夫妻真诚交友，需要找河北科技大学的男同学来约3P，qq136688855，不是大学生勿扰！ </a></div><div class="dvContent_l_04">20%</div><div class="dvContent_l_03"><a href="/p/1218126177.html">【夫妻交流视频】真实夫妻酒店交友2 </a></div><div class="dvContent_l_04">20%</div><div class="dvContent_l_03"><a href="/p/1218127052.html">【夫妻】老婆露脸裸体写真，有兴趣留言给我们 </a></div><div class="dvContent_l_04">20%</div><div class="dvContent_l_03"><a href="/p/1218127415.html">【单女】黄瓜自慰到高潮，水水多多！ </a></div><div class="dvContent_l_04">40%</div><div class="dvContent_l_03"><a href="/p/1218127011.html">【夫妻】 昨晚给老婆拍的，老婆最喜欢的就是欧美系列，最近准备物色一个合适的玩伴，qq1092416651 </a></div><div class="dvContent_l_04">40%</div><div class="dvContent_l_03"><a href="/p/1218125761.html">【夫妻】内蒙古包头夫妻真诚交友。有包头或者周边的可以联系我。420230171 </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218127002.html">【夫妻】广东晒老婆，qq379554457 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218126987.html">【夫妻】山东真诚夫妻，大家多评论，我们qq1311399558 </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218127548.html">【单女】希望结交那个他~3056648534 </a></div><div class="dvContent_l_04">100%</div><div class="dvContent_l_03"><a href="/p/1218127642.html">【夫妻】天太冷了，老婆都不给拍了～qq1873049862 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218127099.html">【夫妻】我的骚老婆 在深圳周边的夫妻可以留言 换妻 </a></div><div class="dvContent_l_04">40%</div><div class="dvContent_l_03"><a href="/p/1218127095.html">【夫妻】我老婆，留言或加QQ1164708604 </a></div><div class="dvContent_l_04">30%</div><div class="dvContent_l_03"><a href="/p/1218127223.html">【夫妻】想找人和自己老婆聊天，勾引她。她已经很淫荡了，希望你进一步调教她 </a></div><div class="dvContent_l_04">100%</div><div class="dvContent_l_03"><a href="/p/1218127034.html">【夫妻】两个人生活愈发的平淡，萌生交流想法有两三年了，经过一年半的反复工作，携半推半就的妻尝试了一次，又经过一年多的潜伏和思想工作，妻的工作才算正式做通，我们qq1540612312，附2014年12月8日拍摄（手机拍摄）于南京某5星酒店 </a></div><div class="dvContent_l_04">20%</div><div class="dvContent_l_03"><a href="/p/1218126945.html">【夫妻】我的嫩白妻子~4！礼服诱惑 还有毛绒玩具哦 qq511086932 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218126713.html">【夫妻】老婆的骚屄，喜欢的留下联系方式。可以在做爱的时候给你语音 </a></div><div class="dvContent_l_04">100%</div><div class="dvContent_l_03"><a href="/p/1218127546.html">【单男】上海新人报道，验证id，顺便希望认识些有趣的人 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218126971.html">【夫妻】山东临沂真诚夫妻，qq1454863869 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218127033.html">【夫妻】有意结交30左右的男生，有过经验的为佳，要求身高175以上，体重70Kg左右，阳光一点，时间自由一点，幽默，善于沟通，有意向男生可以跟我们联系。谢谢各位，不符合就不要加了Q986802403 </a></div><div class="dvContent_l_04">30%</div><div class="dvContent_l_03"><a href="/p/1218127831.html">【套图】我的老婆李良骏每个月都要去上海一趟和包养她的老板开房 </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218127661.html">【夫妻】浙F，严禁插入，qq1215212496 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218126928.html">【夫妻】天津85后 ，我们参与3X活动有一年的时间了，期间结识了5个男生，但我一直期望能升级到夫妻交流和群P，qq2655303273 </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218127021.html">【夫妻】 广东夫妻联系，男生勿打扰。qq3076439898 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218127854.html">【套图】yes365cc@gmail.com【江苏省连云港市夫妻】，一梦两三年，qq529718446 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218127148.html">【夫妻】北京情趣主题酒店开房实录…诚寻单男中… </a></div><div class="dvContent_l_04">50%</div><div class="dvContent_l_03"><a href="/p/1218125867.html">【夫妻】看看美腿丝袜，美美的，真实照片，欢迎交流，临沂q157329664 </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218127210.html">【夫妻】骚老婆照片分享 </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218126944.html">【夫妻】河北夫妻，qq983124672 </a></div><div class="dvContent_l_04">30%</div><div class="dvContent_l_03"><a href="/p/1218127282.html">【视频】终于迈开了第一步，我和老婆在酒店和单男约会，很刺激！ </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218126964.html">【夫妻】广东真实夫妻！骗人死全家！！夫妻结识经验丰富的素质男生或者夫妻和爱人电话调情！！！要求经验丰富！声音动听！阳光帅气！25至30岁！符合的朋友加QQ1911669685 </a></div><div class="dvContent_l_04">20%</div><div class="dvContent_l_03"><a href="/p/1218127777.html">【夫妻】这是我的骚妻，希望大家来调教，任你摆布，老公会在旁边看着，拍照！我们qq3104231717 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218125285.html">【视频】戀愛20年丈夫檢驗愛妻忍受男人的调教發情程度4 </a></div><div class="dvContent_l_04">30%</div><div class="dvContent_l_03"><a href="/p/1218126842.html">【夫妻】老婆带id验证裸照，诚寻单男和夫妻，留下你的联系方式！ </a></div><div class="dvContent_l_04">40%</div><div class="dvContent_l_03"><a href="/p/1218125303.html">【视频】网络招募人妻,在自己家里装摄像头,在老公洗澡时拍AV,第一集 </a></div><div class="dvContent_l_04">30%</div><div class="dvContent_l_03"><a href="/p/1218126904.html">【夫妻】北京市通州区宋庄镇双埠头村：兔兔.玉女——qq2653814376 </a></div><div class="dvContent_l_04">30%</div><div class="dvContent_l_03"><a href="/p/1218127475.html">【视频】坐标北京，真实换妻，有兴趣的加QQ49956611 （备注换妻） </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218127799.html">【夫妻】老婆的调教，同好来 </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218127641.html">【夫妻】女人不够自信就不要说男人花心，男人...坐标安徽，qq3065827215 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218127278.html">【视频】东北美女一边偷情，一边跟男朋友打电话，刺激！ </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218126990.html">【夫妻】 云南80后夫妻，欢迎优秀高素质夫妻、男生交流，带着你们的诚心、诚意来吧。qq2698609622 </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218127818.html">【原创】广州男学生，sm双向求爽 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218127397.html">【单男】带ID验证照片，诚寻夫妻和单女，希望结交更多共同爱好的人 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218127743.html">【夫妻】真诚寻素质夫妻交流，私信我们或者加qq1179464126 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218126960.html">【夫妻交流照片】真实的聚会照片，可以满足老婆的好奇心…… </a></div><div class="dvContent_l_04">40%</div><div class="dvContent_l_03"><a href="/p/1218127324.html">【夫妻】刚刚新婚，求调教 </a></div><div class="dvContent_l_04">60%</div><div class="dvContent_l_03"><a href="/p/1218127459.html">【夫妻】云南的，年龄30，28，想寻求同城夫妻或者单女，有意加QQ1420239108，注明交换 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218126969.html">【夫妻】好不容易说服老婆 迈出第一步慢慢来第二步。老婆平时非常保守 说服了好久终于愿意尝试拍照 期待下一步的开发。qq1044336844 </a></div><div class="dvContent_l_04">40%</div><div class="dvContent_l_03"><a href="/p/1218126988.html">【夫妻】广东东莞年轻夫妻真诚交友，男175CM 28岁 65KG，女160CM 26岁 40KG，非诚勿扰 东莞优先。加我qq1474670172 </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218127862.html">【夫妻】老婆太騷，想找人和我一起分享她，有意願的加QQ 3334368598 僅限澳門和鄭州地區 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218127416.html">【借贷宝】女学生裸贷-向丹丹（视频） </a></div><div class="dvContent_l_04">30%</div><div class="dvContent_l_03"><a href="/p/1218127038.html">【夫妻】（成都）我老婆的肥逼，让你们操…我们qq2476166809 </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218127441.html">【情侣】张家港情侣换，我女友25岁，加150082888 </a></div><div class="dvContent_l_04">20%</div><div class="dvContent_l_03"><a href="/p/1218126993.html">【夫妻】江苏新夫妻，我163体重98斤，老公178体重140斤，我29他35，我们喜爱旅游，希望能找到高素质的朋友。照片都是老公给我拍的。qq3086058726 </a></div><div class="dvContent_l_04">40%</div><div class="dvContent_l_03"><a href="/p/1218125296.html">【夫妻交流视频】河北夫妇真实交友 </a></div><div class="dvContent_l_04">100%</div><div class="dvContent_l_03"><a href="/p/1218127567.html">北邮体育馆二分五十八秒完整视频 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218126843.html">【夫妻】老婆带id验证裸照，诚寻单男和夫妻，留下你的联系方式！ </a></div><div class="dvContent_l_04">60%</div><div class="dvContent_l_03"><a href="/p/1218126967.html">【夫妻】2017青岛美丽夫妻最新，找夫妻单女单男，夫妻需要结婚证，单男需要经济能力好。qq2590968709 </a></div><div class="dvContent_l_04">20%</div><div class="dvContent_l_03"><a href="/p/1218126968.html">【夫妻】浙江宁波夫妻，诚邀真诚的夫妻来宁波同乐！qq26989051 </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218127008.html">【夫妻】[山西] 性感老婆 拍玩照片在慢慢玩，求合作。qq2745552664 </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218127031.html">【夫妻】上海丝袜骚妻，腿很长哦。我们qq7450060 </a></div><div class="dvContent_l_04">30%</div><div class="dvContent_l_03"><a href="/p/1218127180.html">【夫妻】老婆全裸取外卖，真的好刺激～ </a></div><div class="dvContent_l_04">70%</div><div class="dvContent_l_03"><a href="/p/1218127778.html">【夫妻】坐标河南，年龄相当，30/27，现实玩，换妻或3P，诚意加qq2322445954 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218126966.html">【夫妻】之前给老婆拍的性感照，还没来得及拍ID照，先发几张图让群友过过瘾，过几天再发带ID的性感照。qq1150734225 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218126986.html">【夫妻】希望文字多YY，以后还会继续。qq2944558766 </a></div><div class="dvContent_l_04">20%</div><div class="dvContent_l_03"><a href="/p/1218126555.html">【单女】脱光自拍认证一下，有点不好意思^ ^ </a></div><div class="dvContent_l_04">100%</div><div class="dvContent_l_03"><a href="/p/1218126935.html">【夫妻】[四川]过年和老婆出去旅游拍摄的性感照片！老婆一时兴起在宾馆里面拍摄的，qq1206447373 </a></div><div class="dvContent_l_04">20%</div><div class="dvContent_l_03"><a href="/p/1218126839.html">【夫妻】老婆带id验证裸照，诚寻单男和夫妻，留下你的联系方式！ </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218126930.html">【夫妻】qq2739400665，找素质夫妻或单男。 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218127523.html">【夫妻】坐标河北，离北京及天津，山东滨州，德州非常近，希望结交全国有同好的素质夫妻，一起聚会嘻嘻。qq:807853580 </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218127004.html">【夫妻】为论坛做贡献，爱妻照片渴望交流 qq2586976241 </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218126962.html">【夫妻】陕西兰州，我老婆的自拍照，QQ1679678000 </a></div><div class="dvContent_l_04">30%</div><div class="dvContent_l_03"><a href="/p/1218127015.html">【夫妻】山西新人夫妻交流。qq358660036 </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218127276.html">【视频】美女在迪卡侬商场背着陌生人自慰到高潮且喷水完整版！ </a></div><div class="dvContent_l_04">30%</div><div class="dvContent_l_03"><a href="/p/1218127147.html">【夫妻】北京情趣主题酒店开房实录…诚寻单男中... </a></div><div class="dvContent_l_04">70%</div><div class="dvContent_l_03"><a href="/p/1218127849.html">【套图】Q.hhd黒蝴蝶，qq346106864 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218127899.html">【夫妻】骚老婆，边草边打屁股，水直流，欢迎大家讨论交流，QQ:790862326 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218127412.html">【单身】29岁 六块腹肌 求多P 愿意尝试 喜欢的加6581452406 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218126620.html">【夫妻交流照片】真实的家庭聚会 </a></div><div class="dvContent_l_04">80%</div><div class="dvContent_l_03"><a href="/p/1218126999.html">【夫妻】上海90后艰难的迈出第一步，接触也有好长时间了，老婆一直不同意，后面经常提起慢慢的接受了，准备了好长时间拍照，心情非常的激动和忐忑。 但是无论在艰辛还是勇敢的迈出了第一步，还没活动过，准备找个合适的共享，第一个会是你吗？qq1830670318 </a></div><div class="dvContent_l_04">20%</div><div class="dvContent_l_03"><a href="/p/1218126994.html">【夫妻】江苏新夫妻，男生勿扰，假冒夫妻又说妻子不能玩的人也勿扰，谢谢！qq3086058726 </a></div><div class="dvContent_l_04">20%</div><div class="dvContent_l_03"><a href="/p/1218127281.html">【视频】著名的优衣库试衣间视频（经典收藏） </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218126834.html">【夫妻】欢迎大家加入，我操老婆时你在电话里操她，QQ1584235 </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218127657.html">【夫妻】半心，qq2128905627 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218127830.html">【夫妻】成功调教老婆裸露身体取外卖，很自在和外卖小哥聊天，其实老婆水都出来了！同好请留下联系方式～ </a></div><div class="dvContent_l_04">20%</div><div class="dvContent_l_03"><a href="/p/1218127020.html">【夫妻】真诚夫妻交流，瞎聊就请勿扰！1063702264 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218126938.html">【夫妻】成都80后，老婆和我都算小白领吧 ，在一起生活久了，生活需要激情，同时希望结识更多的夫妻朋友！qq1418161805 </a></div><div class="dvContent_l_04">20%</div><div class="dvContent_l_03"><a href="/p/1218127903.html">【夫妻】媳妇水好多，喜欢被当马儿骑，欢迎夫妻或单女交流心得，调教的对方媳妇服服帖帖，有意者加q 2994953095,加q说明来意，单男勿扰 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218126836.html">【夫妻】老婆带ID验证照片，各位多评论~ </a></div><div class="dvContent_l_04">30%</div><div class="dvContent_l_03"><a href="/p/1218126941.html">【夫妻】上海80后夫妻，qq316429526 </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218127855.html">【套图】老公大王八，骚逼欠操，婊子欠操，我妈卖逼生的我这个贱逼，十元一次内射，狗逼。qq2456169335 </a></div><div class="dvContent_l_04">10%</div><div class="dvContent_l_03"><a href="/p/1218127750.html">我的小情人儿，喜欢刺激！如果你有实力（必须五星级酒店，没别的意思，就是一个保障），有魅力（你懂的），私信约！3或者4最好 </a></div><div class="dvContent_l_04">30%</div><div class="dvContent_l_03"><a href="/p/1218126172.html">【视频】国产SM女王调教夫妻奴(经典收藏) </a></div><div class="dvContent_l_04">30%</div><div class="dvContent_l_03"><a href="/p/1218126845.html">【夫妻】老婆自慰到高潮，带id验证！ </a></div><div class="dvContent_l_04">20%</div><div class="dvContent_l_03"><a href="/p/1218127656.html">【夫妻】前途，qq2419464339 </a></div><div class="dvContent_l_04">0%</div><div class="dvContent_l_03"><a href="/p/1218127097.html">【夫妻】带上老婆去3P，喜欢请留言或私信我～ </a></div><div class="dvContent_l_04">50%</div><div class="dvContent_l_03"><a href="/p/1218127302.html">百度贴吧发帖、论坛发帖或者写一篇博客，都可以获赠1张礼品卡，注意最后的暗网中文论坛UID要填你自己的，不要写别人的！发完后把链接地址回复到下面即可～ </a></div><div class="dvContent_l_04">40%</div><div class="dvContent_l_03"><a href="/p/1218127087.html">【夫妻】广东佛山真诚夫妻交友，留言或加QQ2635259245 </a></div><div class="dvContent_l_04">30%</div><div class="dvContent_l_03"><a href="/p/1218127000.html">【夫妻】 留下你们评论，我们qq545110999 </a></div><div class="dvContent_l_04">10%</div>
+</div>
+<div id="dvBottom"><hr><span>正在加载</span></div>
+<div id="stopFlag" style="display:none;">0</div>
+<div id="minDaTime" style="display:none;">2000-12-31 11:11:11</div>
+</body>
+</html>
